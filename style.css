@@ -1,0 +1,298 @@
+/* ========== Design Tokens ========== */
+:root {
+  --accent: #ac7685;
+  --text: #222;
+  --muted: #e8e8e8;
+  --bg: #f8f8f8;
+
+  --maxw: 800px;
+  --base-size: 18px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Instrument Sans', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-size: var(--base-size);
+  color: var(--text);
+  background: var(--bg);
+  margin: 0;
+  display: block;
+  min-height: 100%;
+}
+
+/* ========== Layout ========== */
+.container{
+  width: min(100%, var(--maxw));
+  margin: 5rem auto;
+  padding-left: clamp
+}
+
+/* Sections (top-level only) */
+section {
+  width: 100%;
+  padding-top: 2.25rem;
+}
+
+section + section {
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 0px solid var(--muted);
+}
+
+/* ========== Typography ========== */
+h1, h2, h3 {
+  font-family: 'Google Sans Code', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-weight: 400;
+  color: var(--text);
+  margin: 0 0 0.5rem 0;
+}
+
+h1 { font-size: 3rem; }
+h2 { font-size: 1.4rem; font-weight: 600; }
+
+p {
+  line-height: 1.5;
+  font-size: inherit;
+  text-align: left;
+  margin: 1rem 0 0 0;
+}
+
+/* Links */
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+  font-weight: 500;
+}
+
+a:hover { border-color: var(--accent); }
+
+/* ========== Hero + Profile ========== */
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-height: 80svh;
+  padding: 3rem 0;
+}
+
+.hero--compact {
+  min-height: auto;
+  padding: 2rem 0 1rem;
+}
+
+.profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+.profile img {
+  width: 300px;
+  height: auto;
+  border-radius: 0;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info { flex: 1; text-align: left; }
+
+.links { margin-bottom: 1rem; }
+.links a { margin-right: 1rem; }
+
+/* ========== Books / Podcasts Grid ========== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* ========== Clickable Image Cards (details/summary) ========== */
+.media-card {
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+.media-card > summary {
+  position: relative;
+  cursor: pointer;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.media-card > summary::-webkit-details-marker { display: none; }
+
+.media-card .thumb {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  background: #fafafa;
+  border-radius: 0;
+}
+
+/* aspect ratios */
+.media-card.book-card .thumb { aspect-ratio: 2 / 3; }
+.media-card.pod-card  .thumb { aspect-ratio: 1 / 1; }
+
+/* overlay */
+.media-card .overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--text);
+
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.media-card[open] .overlay {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+@media (hover: hover) {
+  .media-card > summary:hover .thumb { opacity: 0.95; }
+}
+
+.media-card[open] .thumb {
+  transform: scale(1.01);
+  transition: transform 0.2s ease;
+}
+
+.media-card .title {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.media-card .meta {
+  margin: 0.4rem 0 0 0;
+  font-size: 0.92rem;
+  color: #555;
+}
+
+.media-card .episodes {
+  margin: 0.6rem 0 0 0;
+  padding-left: 1.15rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.media-card .episodes li + li { margin-top: 0.25rem; }
+
+/* ========== Typewriter ========== */
+.typewriter {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  /* border-right: 2px solid currentColor; */
+  border-right: none;
+  /* animation: typeErase 16s steps(var(--n)) infinite, caretBlink 0.9s step-end infinite; */
+  /* animation: caretBlink 0.9s step-end infinite; */
+}
+
+@keyframes typeErase {
+  0% { width: 0ch; }
+  12.5% { width: calc(var(--n) * 1ch); }
+  87.5% { width: calc(var(--n) * 1ch); }
+  100% { width: 0ch; }
+}
+
+@keyframes caretBlink {
+  50% { border-color: transparent; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typewriter { animation: none; border-right: 0; }
+}
+
+/* ========== Gallery Grid (keeps your current behavior) ========== */
+/* Your latest rules imply: fixed mosaic + consistent tile height + cropping. */
+.gallery-grid {
+  display: grid;
+  width: 100%;
+  gap: 1rem;
+  margin-top: 1rem;
+
+  grid-template-columns: repeat(14, 1fr);
+  grid-template-rows: repeat(11, 1fr);
+  grid-template-areas:
+    "a a a a b b b b b c c c c c"
+    "a a a a b b b b b c c c c c"
+    "a a a a b b b b b c c c c c"
+    "a a a a b b b b b c c c c c"
+    "a a a a b b b b b c c c c c"
+    "d d d d d d d d e e e e e e"
+    "d d d d d d d d e e e e e e"
+    "d d d d d d d d e e e e e e"
+    "d d d d d d d d e e e e e e"
+    "d d d d d d d d e e e e e e"
+    "d d d d d d d d e e e e e e";
+}
+
+.gallery-item { margin: 0; }
+.gallery-item.a { grid-area: a; }
+.gallery-item.b { grid-area: b; }
+.gallery-item.c { grid-area: c; }
+.gallery-item.d { grid-area: d; }
+.gallery-item.e { grid-area: e; }
+/* note: .f is not in areas; leaving it as auto-placement matches your current behavior */
+
+.gallery-item img {
+  width: 100%;
+  height: clamp(160px, 22vw, 260px);
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-grid .item,
+.gallery-grid .item.wide {
+  height: clamp(160px, 22vw, 260px);
+  overflow: hidden;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 700px) {
+  .container { padding: 1.25rem; }
+
+  .profile {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .info { text-align: center; }
+
+  h1 { font-size: 1.9rem; }
+
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
